@@ -6,7 +6,14 @@ package main
 // 3) set/update budget
 // 4) create new user
 // 5)
-import "github.com/gofiber/fiber"
+import (
+	"encoding/json"
+	"fmt"
+
+	pb "github.com/Bruary/transactions-service/models/proto"
+	"github.com/Bruary/transactions-service/service"
+	"github.com/gofiber/fiber/v2"
+)
 
 func main() {
 	app := fiber.New()
@@ -17,13 +24,32 @@ func main() {
 	// TODO:
 	//1) Add transactions models
 	//2) Integrate protobuffs
-	v1.Post("/transactions", func(c *fiber.Ctx) {
 
+	v1.Post("/transactions", func(c *fiber.Ctx) error {
+
+		req := pb.CreateTransactionRequest{}
+
+		err := json.Unmarshal(c.Body(), &req)
+		if err != nil {
+			return err
+		}
+
+		fmt.Println("Coming here?")
+
+		result, err := service.CreateTransaction(req)
+		if err != nil {
+			return err
+		}
+
+		resp, err := json.Marshal(&result)
+		if err != nil {
+			return err
+		}
+
+		c.JSON(resp)
+
+		return nil
 	})
 
-	app.Get("/", func(c *fiber.Ctx) {
-		c.Send("Hello, World!")
-	})
-
-	app.Listen(3000)
+	app.Listen(":3000")
 }
