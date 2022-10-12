@@ -1,4 +1,4 @@
-module github.com/Bruary/api-service
+module github.com/Bruary/transactions-service
 
 go 1.16
 
