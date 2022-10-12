@@ -3,7 +3,7 @@ package server
 import (
 	"math/rand"
 
-	"github.com/Bruary/api-service/server/pb"
+	"github.com/Bruary/transactions-service/server/pb"
 	uuid "github.com/google/uuid"
 )
 
