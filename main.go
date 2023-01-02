@@ -1,10 +1,13 @@
 package main
 
 import (
+	"context"
+	"fmt"
 	"log"
 	"net"
 
-	"github.com/Bruary/transactions-service/server/pb"
+	pb "github.com/Bruary/transactions-service/server/pb"
+	"github.com/google/uuid"
 	"google.golang.org/grpc"
 )
 
@@ -14,6 +17,17 @@ const (
 
 type TransactionsServer struct {
 	pb.UnimplementedTransactionsServer
+}
+
+func (s *TransactionsServer) CreateTransaction(ctx context.Context, req *pb.CreateTransactionRequest) (*pb.CreateTransactionResponse, error) {
+	fmt.Println("The request: %v", req.GetAmount(), req.GetCurrency())
+	user_uid := uuid.New()
+
+	return &pb.CreateTransactionResponse{
+		Uid:      user_uid.String(),
+		Amount:   req.GetAmount(),
+		Currency: req.GetCurrency(),
+	}, nil
 }
 
 func main() {
