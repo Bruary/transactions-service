@@ -18,11 +18,3 @@ func (t *TransactionsServer) CreateTransaction(req *pb.CreateTransactionRequest)
 		Currency: "AED",
 	}, nil
 }
-
-func (t *TransactionsServer) GetTransaction() {
-
-}
-
-func (t *TransactionsServer) GetTransactions() {
-
-}

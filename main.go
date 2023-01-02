@@ -20,7 +20,7 @@ type TransactionsServer struct {
 }
 
 func (s *TransactionsServer) CreateTransaction(ctx context.Context, req *pb.CreateTransactionRequest) (*pb.CreateTransactionResponse, error) {
-	fmt.Println("The request: %v", req.GetAmount(), req.GetCurrency())
+	fmt.Println("The request: ", req.GetAmount(), req.GetCurrency())
 	user_uid := uuid.New()
 
 	return &pb.CreateTransactionResponse{
@@ -35,7 +35,7 @@ func main() {
 	// open connection
 	lis, err := net.Listen("tcp", port)
 	if err != nil {
-		log.Fatal("Failed to listen: %v", err)
+		log.Fatal("Failed to listen: ", err)
 	}
 	// Create a new grpc server
 	s := grpc.NewServer()
@@ -46,7 +46,7 @@ func main() {
 
 	// start reading and parsing the input
 	if err = s.Serve(lis); err != nil {
-		log.Fatal("Failed to serve: %v", err)
+		log.Fatal("Failed to serve: ", err)
 	}
 
 }
