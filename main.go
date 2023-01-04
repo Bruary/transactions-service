@@ -6,6 +6,7 @@ import (
 	"log"
 	"net"
 
+	"github.com/Bruary/transactions-service/db"
 	pb "github.com/Bruary/transactions-service/server/pb"
 	"github.com/google/uuid"
 	"google.golang.org/grpc"
@@ -31,6 +32,9 @@ func (s *TransactionsServer) CreateTransaction(ctx context.Context, req *pb.Crea
 }
 
 func main() {
+
+	//establish DB connection
+	db.EstablishDBConnection()
 
 	// open connection
 	lis, err := net.Listen("tcp", port)
