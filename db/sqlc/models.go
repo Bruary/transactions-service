@@ -5,13 +5,15 @@
 package db
 
 import (
+	"database/sql"
 	"time"
 )
 
 type Transaction struct {
-	ID       int64
+	ID       int32
 	Uid      string
 	Created  time.Time
 	Amount   string
 	Currency string
+	UserID   sql.NullInt32
 }

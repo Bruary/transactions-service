@@ -20,7 +20,7 @@ func (q *Queries) DeleteTransaction(ctx context.Context, uid string) error {
 }
 
 const getTransaction = `-- name: GetTransaction :one
-SELECT id, uid, created, amount, currency FROM transactions
+SELECT id, uid, created, amount, currency, user_id FROM transactions
 WHERE uid = $1 LIMIT 1
 `
 
@@ -33,12 +33,13 @@ func (q *Queries) GetTransaction(ctx context.Context, uid string) (Transaction, 
 		&i.Created,
 		&i.Amount,
 		&i.Currency,
+		&i.UserID,
 	)
 	return i, err
 }
 
 const getTransactions = `-- name: GetTransactions :many
-SELECT id, uid, created, amount, currency FROM transactions
+SELECT id, uid, created, amount, currency, user_id FROM transactions
 ORDER BY id
 `
 
@@ -57,6 +58,7 @@ func (q *Queries) GetTransactions(ctx context.Context) ([]Transaction, error) {
 			&i.Created,
 			&i.Amount,
 			&i.Currency,
+			&i.UserID,
 		); err != nil {
 			return nil, err
 		}
@@ -77,7 +79,7 @@ INSERT INTO transactions (
 ) VALUES (
   $1, $2
 )
-RETURNING id, uid, created, amount, currency
+RETURNING id, uid, created, amount, currency, user_id
 `
 
 type InsertTransactionParams struct {
@@ -94,6 +96,7 @@ func (q *Queries) InsertTransaction(ctx context.Context, arg InsertTransactionPa
 		&i.Created,
 		&i.Amount,
 		&i.Currency,
+		&i.UserID,
 	)
 	return i, err
 }

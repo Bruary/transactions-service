@@ -36,5 +36,4 @@ func EstablishDBConnection() {
 	}
 
 	fmt.Println("Established a successful DataBase connection!")
-
 }
